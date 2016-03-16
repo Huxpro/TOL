@@ -5,6 +5,7 @@ let Link = Router.Link;
 
 
 import DumbTower from './DumbTower.jsx';
+import WorkTower from './WorkTower.jsx';
 
 // Entry of TOL.
 let Main = React.createClass({
@@ -14,11 +15,15 @@ let Main = React.createClass({
       loading: true,
       user: null,
       dumbTowel: [
+        ["R"],
+        ["G"],
+        ["B"]
+      ],
+      workTowel: [
         ["R", "G"],
         ["B"],
-        [null]
+        []
       ],
-      workTowel: []
     }
   },
 
@@ -50,23 +55,9 @@ let Main = React.createClass({
           </div>
         </div>
 
-        <div className="holder game">
-          <div className="peg" >
-            <div className="bead bead-r" />
-            <div className="bead bead-g" />
-            <div className="bead bead-b" />
-          </div>
-          <div className="peg" >
-            <div className="bead bead-g" />
-            <div className="bead bead-b" />
-          </div>
-          <div className="peg" >
-            <div className="bead bead-b" />
-          </div>
-          <p className="intro"> Click to pick up and drop </p>
-        </div>
 
-        <DumbTower />
+        <WorkTower model={this.state.workTowel} />
+        <DumbTower model={this.state.dumbTowel} />
       </div>
     );
   }

@@ -17,9 +17,9 @@ export default (props) => {
   })
 
   return (
-    <div className="holder goal">
+    <div className="holder work">
       {pegs}
-      <p className="intro"> Goal State </p>
+      <p className="intro">Click to pick up and drop</p>
     </div>
   )
 }

@@ -47,7 +47,7 @@ $peg: $bead + 8px;
   position: absolute;
   bottom: 50px;
   width: 450px;
-  &.game{
+  &.work{
     left: 15px;
   }
   &.goal{
@@ -64,13 +64,17 @@ $peg: $bead + 8px;
   .peg{
     position: absolute;
     bottom: 30px;
-    width: auto;
+    //width: auto;
+    width: $bead;
     padding: 5px;
     border: 2px dashed $gray;
     transition: all 0.2s ease;
     &:hover{
       border: 2px dashed $dark;
       cursor: pointer;
+      .bead:last-child{
+        box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.2);
+      }
     }
     &:nth-child(1){
       height: $bead * 3;
@@ -84,22 +88,35 @@ $peg: $bead + 8px;
       height: $bead;
       left: $peg * 3 + 60px;
     }
+    .bead{
+      position: absolute;
+      &:nth-child(1){
+        bottom: 5px;
+      }
+      &:nth-child(2){
+        bottom: $bead + 5px;
+      }
+      &:nth-child(3){
+        bottom: $bead * 2 + 5px;;
+      }
+    }
   }
 }
 
 .bead{
   width: 60px;
   height: 60px;
-  border: 2px solid $bgColor;
+  margin: 2px;
   background: $darkgray;
   border-radius: 50%;
-  &.bead-r{
+  transition: all 0.5s ease;
+  &.bead-R{
     background: #FF7575;
   }
-  &.bead-g{
+  &.bead-G{
     background: #81D681;
   }
-  &.bead-b{
+  &.bead-B{
     background: #BEBEEC;
   }
 }
