@@ -15,7 +15,8 @@ require('./app.scss');
 
 // Closure Scope
 (function () {
-  let React = require('react/addons'),
+  let React = require('react'),
+    ReactDOM = require('react-dom');
     Router = require('react-router'),
     AppRoutes = require('./app-routes.jsx'),
     injectTapEventPlugin = require('react-tap-event-plugin');
@@ -46,7 +47,7 @@ require('./app.scss');
     // This is our callback function, whenever the url changes it will be called again.
     // Handler: The ReactComponent class that will be rendered
     .run(function (Handler) {
-      React.render(<Handler/>, document.body);
+      ReactDOM.render(<Handler/>, document.body);
     });
 
 })();

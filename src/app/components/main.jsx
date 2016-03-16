@@ -4,13 +4,21 @@ let RouteHandler = Router.RouteHandler;
 let Link = Router.Link;
 
 
+import DumbTower from './DumbTower.jsx';
+
 // Entry of TOL.
 let Main = React.createClass({
 
   getInitialState(){
     return {
       loading: true,
-      user: null
+      user: null,
+      dumbTowel: [
+        ["R", "G"],
+        ["B"],
+        [null]
+      ],
+      workTowel: []
     }
   },
 
@@ -58,21 +66,7 @@ let Main = React.createClass({
           <p className="intro"> Click to pick up and drop </p>
         </div>
 
-        <div className="holder goal">
-          <div className="peg" >
-            <div className="bead bead-r" />
-            <div className="bead bead-g" />
-            <div className="bead bead-b" />
-          </div>
-          <div className="peg" >
-            <div className="bead bead-g" />
-            <div className="bead bead-b" />
-          </div>
-          <div className="peg" >
-            <div className="bead bead-b" />
-          </div>
-          <p className="intro"> Goal State </p>
-        </div>
+        <DumbTower />
       </div>
     );
   }
