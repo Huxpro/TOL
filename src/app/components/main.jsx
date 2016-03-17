@@ -44,13 +44,8 @@ let Main = React.createClass({
     let work = this.state.workTower,
         goal = this.state.dumbTower;
 
-    console.log(work);
-    console.log(goal);
-    return (
-      isEqual(work[0], goal[0]) &&
-      isEqual(work[1], goal[1]) &&
-      isEqual(work[2], goal[2])
-    )
+    //console.log(work.slice(0,3));
+    return isEqual(goal, work.slice(0,3))
   },
 
   render() {
