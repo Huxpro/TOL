@@ -27,8 +27,32 @@ export default class WorkTower extends React.Component{
     }
   }
 
+  isPegFull(i){
+    let range = [3,2,1];
+    return this.props.model[i].length >= range[i];
+  }
+
+  showPegWarning(i){
+    let pegs = document.querySelectorAll(".work .peg");
+    pegs[i].classList.add("warning");
+    setTimeout(()=>{
+      pegs[i].classList.remove("warning");
+    },200)
+    setTimeout(()=>{
+      pegs[i].classList.add("warning");
+    },400)
+    setTimeout(()=>{
+      pegs[i].classList.remove("warning");
+    },600)
+  }
+
+
   dropBead(updateIndex, movingBead){
-    // isValid
+    // check valid
+    if(this.isPegFull(updateIndex)){
+      this.showPegWarning(updateIndex);
+      return;
+    }
 
     // new state
     let newModel = this.props.model.map((peg, index)=>{
@@ -46,7 +70,11 @@ export default class WorkTower extends React.Component{
 
   stageBead(updateIndex, movingBead){
     // check valid
-    if(this.props.model[updateIndex].length == 0) return;
+    if(this.props.model[updateIndex].length == 0) {
+      this.showPegWarning(updateIndex);
+      return;
+    };
+
     // new state
     let newModel = this.props.model.map((peg, index)=>{
       if(index == 3) return [movingBead];
@@ -61,6 +89,7 @@ export default class WorkTower extends React.Component{
     })
   }
 
+
   render(){
     let pegs = this.props.model.map((peg, i) => {
       return (
@@ -73,7 +102,7 @@ export default class WorkTower extends React.Component{
             if (!bead) return null;
             return (
               <div
-                key={"bead" + i}
+                key={"wbead" + bead}
                 className={"bead bead-" + bead} />
             )
           })}

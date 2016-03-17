@@ -8,6 +8,8 @@ import DumbTower from './DumbTower.jsx';
 import WorkTower from './WorkTower.jsx';
 
 import isEqual from 'lodash.isequal';
+import {A, B} from '../stagesModel';
+
 
 // Entry of TOL.
 let Main = React.createClass({
@@ -22,7 +24,7 @@ let Main = React.createClass({
         ["B"]
       ],
       workTower: [
-        ["R", "G"],
+        ["G", "R"],
         ["B"],
         [],
         []
@@ -34,6 +36,11 @@ let Main = React.createClass({
   componentDidMount(){
     // for some global call need.
     window.__tol__ = this;
+    this.updateStage(this.props.params);
+  },
+
+  componentWillReceiveProps(nextProps) {
+    this.updateStage(nextProps.params);
   },
 
   componentDidUpdate(prevProps, prevState) {
@@ -48,13 +55,29 @@ let Main = React.createClass({
     return isEqual(goal, work.slice(0,3))
   },
 
+  updateStage(params){
+    let stageModel = [];
+    let stage = params.stage;
+
+    if(params.group == "A") stageModel = A[stage]
+    if(params.group == "B") stageModel = B[stage]
+
+    this.setState({
+      dumbTower: stageModel
+    })
+  },
+
   render() {
     let _loading = this.state.loading ? (
       <p>Loading</p>) : null;
 
     return (
       <div className="canvas">
-        <h1> Towel of London - Stage 1</h1>
+        <h1>
+          Towel of London -
+          Group {this.props.params.group} -
+          Stage {Number(this.props.params.stage) + 1}
+        </h1>
 
         <div className="modal cached">
           <div>

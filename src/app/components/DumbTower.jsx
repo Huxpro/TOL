@@ -13,7 +13,7 @@ export default (props) => {
       >
         {peg.map((bead) => {
           if (!bead) return null;
-          return <div key={"bead" + i} className={"bead bead-" + bead} />
+          return <div key={"dbead" + bead} className={"bead bead-" + bead} />
         })}
       </div>
     )

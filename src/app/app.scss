@@ -84,7 +84,11 @@ $peg: $bead + 8px;
     width: $bead;
     padding: 5px;
     border: 2px dashed $gray;
-    transition: all 0.2s ease;
+    transition: all 0.15s ease;
+    &.warning{
+      background: #F9A2A2;
+      border: 2px dashed $em !important;
+    }
     &:nth-child(1){
       height: $bead * 3;
       left: $peg
