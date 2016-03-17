@@ -7,6 +7,8 @@ let Link = Router.Link;
 import DumbTower from './DumbTower.jsx';
 import WorkTower from './WorkTower.jsx';
 
+import isEqual from 'lodash.isequal';
+
 // Entry of TOL.
 let Main = React.createClass({
 
@@ -14,22 +16,41 @@ let Main = React.createClass({
     return {
       loading: true,
       user: null,
-      dumbTowel: [
+      dumbTower: [
         ["R"],
         ["G"],
         ["B"]
       ],
-      workTowel: [
+      workTower: [
         ["R", "G"],
         ["B"],
+        [],
         []
       ],
+      isGoalState: false
     }
   },
 
   componentDidMount(){
     // for some global call need.
     window.__tol__ = this;
+  },
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.checkGoal()) console.log("Goal State!")
+  },
+
+  checkGoal(){
+    let work = this.state.workTower,
+        goal = this.state.dumbTower;
+
+    console.log(work);
+    console.log(goal);
+    return (
+      isEqual(work[0], goal[0]) &&
+      isEqual(work[1], goal[1]) &&
+      isEqual(work[2], goal[2])
+    )
   },
 
   render() {
@@ -56,16 +77,12 @@ let Main = React.createClass({
         </div>
 
 
-        <WorkTower model={this.state.workTowel} />
-        <DumbTower model={this.state.dumbTowel} />
+        <WorkTower model={this.state.workTower} />
+        <DumbTower model={this.state.dumbTower} />
       </div>
     );
   }
 });
 
-// pass down router in context
-Main.contextTypes = {
-  router: React.PropTypes.func
-};
 
 module.exports = Main;

@@ -22,7 +22,7 @@ window.React = React;
 
 
 // React Router 2.0.0
-import { Router, Route } from 'react-router'
+import { Router, Route, hashHistory } from 'react-router'
 
 
 // Closure Scope
@@ -34,7 +34,7 @@ import { Router, Route } from 'react-router'
 
   // Render app with React-Router
   ReactDOM.render((
-    <Router>
+    <Router history={hashHistory}>
       <Route path="/" component={Main} />
     </Router>
   ), document.getElementById('app'))

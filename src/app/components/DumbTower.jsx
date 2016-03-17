@@ -5,12 +5,15 @@
 
 export default (props) => {
 
-  let pegs = props.model.map((peg) => {
+  let pegs = props.model.map((peg, i) => {
     return (
-      <div className = "peg">
+      <div
+        className = "peg"
+        key={"peg" + i}
+      >
         {peg.map((bead) => {
           if (!bead) return null;
-          return <div className={"bead bead-" + bead} />
+          return <div key={"bead" + i} className={"bead bead-" + bead} />
         })}
       </div>
     )

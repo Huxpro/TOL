@@ -49,9 +49,26 @@ $peg: $bead + 8px;
   width: 450px;
   &.work{
     left: 15px;
+    .peg:hover{
+      border: 2px dashed $dark;
+      cursor: pointer;
+      .bead:last-child{
+        box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.2);
+      }
+      &:last-of-type{
+        border: 2px dashed transparent;
+        cursor: default;
+        .bead:last-child{
+          box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.2);
+        }
+      }
+    }
   }
   &.goal{
     right: 0px;
+    .peg:hover{
+      cursor: not-allowed;
+    }
   }
   .intro{
     position: absolute;
@@ -59,7 +76,6 @@ $peg: $bead + 8px;
     width: 95%;
     text-align: center;
     color: $darkgray;
-
   }
   .peg{
     position: absolute;
@@ -69,13 +85,6 @@ $peg: $bead + 8px;
     padding: 5px;
     border: 2px dashed $gray;
     transition: all 0.2s ease;
-    &:hover{
-      border: 2px dashed $dark;
-      cursor: pointer;
-      .bead:last-child{
-        box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.2);
-      }
-    }
     &:nth-child(1){
       height: $bead * 3;
       left: $peg
@@ -87,6 +96,16 @@ $peg: $bead + 8px;
     &:nth-child(3){
       height: $bead;
       left: $peg * 3 + 60px;
+    }
+    // staging area
+    &:nth-child(4){
+      height: $bead;
+      left: $peg * 2 + 30px;
+      bottom: $peg * 4;
+      border: 2px dashed transparent;
+      .bead{
+        box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.2);
+      }
     }
     .bead{
       position: absolute;
