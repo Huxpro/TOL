@@ -1,6 +1,6 @@
 /**
  *  Dumb Tower
- *  Dumb displayment of TOL
+ *  Working Space of TOL
  */
 
 var update = require('react-addons-update');
