@@ -60,16 +60,25 @@ let Main = React.createClass({
 
   componentDidUpdate(prevProps, prevState) {
     if (this.checkGoal()) {
-      console.log("Goal State!");
-      this.setState({
-        modalType: "stageCompleted"
-      })
+      let currentStage = this.props.params.stage;
+      console.log(currentStage + " Goal State! ");
+      if(Number(currentStage) >= 9){
+        this.setState({
+          modalType: "gameCompleted"
+        })
+      }else{
+        this.setState({
+          modalType: "stageCompleted"
+        })
+      }
     }
   },
 
   shouldComponentUpdate(nextProps, nextState) {
+    if(nextState.modalType == "instruction1") return true;
     if(nextState.modalType &&
-       this.state.modalType == "stageCompleted") {
+       this.state.modalType == "stageCompleted" ||
+       this.state.modalType == "gameCompleted") {
          console.log("preventComponentUpdating");
          return false;
     }
@@ -90,7 +99,7 @@ let Main = React.createClass({
     if (params.step) {
       newModalType = "instruction" + params.step
     }
-    console.log(newModalType);
+    console.log("newModalType: " + newModalType);
     this.setState({
       modalType: newModalType
     })
@@ -128,7 +137,7 @@ let Main = React.createClass({
         </h1>
 
         <h2>
-          Student - {this.state.user} 
+          Student - {this.state.user}
         </h2>
 
         <Modal type={this.state.modalType} {...this.props} />

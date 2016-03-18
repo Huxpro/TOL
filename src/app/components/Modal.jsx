@@ -79,6 +79,20 @@ export default class Modal extends React.Component{
             <button>进入下一关</button>
           </Link>
         </div>
+      ),
+      "gameCompleted": (
+        <div>
+          <p>
+            游戏完成！
+            感谢你的参与！
+          </p>
+          <p>
+            请举手示意！
+          </p>
+          <Link to="/instruction/1">
+            <button>再来一局</button>
+          </Link>
+        </div>
       )
     }
 
