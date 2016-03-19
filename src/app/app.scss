@@ -161,9 +161,6 @@ $peg: $bead + 8px;
   top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%,-50%);
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
   background: rgba(0,0,0,0.5);
   text-align: center;
   &>div{
