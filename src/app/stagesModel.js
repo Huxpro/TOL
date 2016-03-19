@@ -1,6 +1,13 @@
 
 
 let A = [
+  // 测试关卡 0
+  [
+    ["G"],
+    ["R"],
+    ["B"]
+  ],
+  // 正式关卡 1-10
   [
     ["R", "B"],
     ["G"],
@@ -53,16 +60,18 @@ let A = [
   ],
 ]
 
-
-
-
-let B = [
-
+let PostOrder = [
+  6, 1, 7, 2, 8, 3, 9, 4, 10, 5
 ]
+
+PostOrder.forEach((stage) => {
+  A.push(A[stage])
+})
+
+//__tol__.stages = A;
 
 
 
 export default {
   A: A,
-  B: B
 }

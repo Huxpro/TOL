@@ -4,6 +4,8 @@
  */
 
 import { Link } from 'react-router'
+import DelayButton from './DelayButton'
+
 
 export default class Modal extends React.Component{
   constructor(props){
@@ -75,10 +77,12 @@ export default class Modal extends React.Component{
             接下来，你会看到两张图。
           </p>
           <p>
-            用鼠标拖动左图三根柱子上的小球使小球由起始状变为右图的最终状态。
+            用鼠标点击左图三根柱子使小球抬起，<br />
+            再次点击一根柱子使小球落下。
           </p>
           <p>
-            <em>注意：</em>每次只能移动一个小球，且最高的柱子上可以放置三个小球，中间的柱子可以放置两个小球，最矮的柱子只能放置一个小球。
+            <br />
+            <em>你的目标是使左边的小球由起始状变为右图的最终状态。</em>
           </p>
           <Link to="/instruction/3">
             <button> Got it! </button>
@@ -88,10 +92,25 @@ export default class Modal extends React.Component{
       "instruction3": (
         <div>
           <p>
-            例如，你会看到如下两张图。你需要像动画中一样移动小球使之成为右图所显示的最终状态。
+            <em>注意：</em>每次只能移动一个小球，且最高的柱子上可以放置三个小球，中间的柱子可以放置两个小球，最矮的柱子只能放置一个小球。
+          </p>
+          <p>
+            <br/>
+            你可以在接下来的测试关卡试着进行操作
           </p>
           <Link to="/A/0">
-            <button> Got it! </button>
+            <button>进入测试关卡</button>
+          </Link>
+        </div>
+      ),
+      "testCompleted": (
+        <div>
+          <p>
+            看来你已经学会了如何操作！
+          </p>
+          <p>接下来我们将进入正式实验</p>
+          <Link to={`/A/${this.getNextStage()}`}>
+            <button>进入正式实验</button>
           </Link>
         </div>
       ),
@@ -105,17 +124,33 @@ export default class Modal extends React.Component{
           </Link>
         </div>
       ),
+      "halfCompleted": (
+        <div>
+          <p>
+            第一轮游戏完成！
+          </p>
+          <p>
+            请举手示意！
+          </p>
+          <Link to="/A/11">
+            <DelayButton delay={3000}>进入第二轮</DelayButton>
+          </Link>
+        </div>
+      ),
       "gameCompleted": (
         <div>
           <p>
-            游戏完成！
+            两轮游戏完成！
             感谢你的参与！
           </p>
           <p>
             请举手示意！
           </p>
           <Link to="/instruction/1">
-            <button>再来一局</button>
+            <DelayButton delay={1000}>查看结果</DelayButton>
+          </Link>
+          <Link to="/instruction/1">
+            <DelayButton delay={3000}>重新开始</DelayButton>
           </Link>
         </div>
       )

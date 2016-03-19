@@ -10,7 +10,7 @@ import WorkTower from './WorkTower.jsx';
 import Modal from './Modal.jsx';
 
 import isEqual from 'lodash.isequal';
-import {A, B} from '../stagesModel';
+import {A} from '../stagesModel';
 
 
 // But, without immutable data structure...
@@ -42,7 +42,9 @@ let Main = React.createClass({
       ],
       isGoalState: false,
       modalType: null,
-      user: null
+      user: {
+        name: ""
+      }
     }
   },
 
@@ -62,7 +64,20 @@ let Main = React.createClass({
     if (this.checkGoal()) {
       let currentStage = this.props.params.stage;
       console.log(currentStage + " Goal State! ");
-      if(Number(currentStage) >= 9){
+
+      if(Number(currentStage) == 0){
+        this.setState({
+          modalType: "testCompleted"
+        })
+        return;
+      }
+      if(Number(currentStage) == 10){
+        this.setState({
+          modalType: "halfCompleted"
+        })
+        return;
+      }
+      if(Number(currentStage) == 20){
         this.setState({
           modalType: "gameCompleted"
         })
@@ -76,9 +91,11 @@ let Main = React.createClass({
 
   shouldComponentUpdate(nextProps, nextState) {
     if(nextState.modalType == "instruction1") return true;
-    if(nextState.modalType &&
+    if(nextState.modalType && (
+       this.state.modalType == "testCompleted" ||
        this.state.modalType == "stageCompleted" ||
-       this.state.modalType == "gameCompleted") {
+       this.state.modalType == "halfCompleted" ||
+       this.state.modalType == "gameCompleted" )) {
          console.log("preventComponentUpdating");
          return false;
     }
@@ -110,7 +127,6 @@ let Main = React.createClass({
     let stage = params.stage;
 
     if(params.group == "A") stageModel = A[stage]
-    if(params.group == "B") stageModel = B[stage]
 
     this.setState({
       workTower: [
@@ -127,13 +143,13 @@ let Main = React.createClass({
   render() {
     let _loading = this.state.loading ? (
       <p>Loading</p>) : null;
+    let _stage = Number(this.props.params.stage);
 
     return (
       <div className="canvas">
         <h1>
           Towel of London -
-          Group {this.props.params.group} -
-          Stage {Number(this.props.params.stage) + 1}
+          Stage { (_stage == 0) ? "TEST" : _stage }
         </h1>
         <div className="score-board">
           <h1>Total Move: </h1>
