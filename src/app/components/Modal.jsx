@@ -47,6 +47,8 @@ export default class Modal extends React.Component{
    * calculate recorded data and generate table.
    */
   getDataTable(){
+    if(this.props.type !== "instructionend") return;
+    
     let _moveScore    = 0,
         _correctScore = 0,
         _minMoves     = M,

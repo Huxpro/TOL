@@ -47,6 +47,7 @@ let Main = React.createClass({
       },
       moves: [],
       violation: 0,
+      timeViolation: 0,
       initTime: 0,
       exeTime: 0,
       recordInit: false,
@@ -62,6 +63,19 @@ let Main = React.createClass({
 
     // half speed to 16ms (60fps)
     this.interval = setInterval(this.tick, 32);
+
+    // Detect Key t(84)
+    var $score = document.querySelector('.score-board')
+    window.score = $score;
+    document.addEventListener('keydown', (e)=>{
+      if(e.keyCode == 84){
+        if($score.classList.contains('cached')){
+          $score.classList.remove('cached')
+        }else{
+          $score.classList.add('cached')
+        }
+      }
+    })
   },
 
   componentWillUnmount(){
@@ -206,7 +220,7 @@ let Main = React.createClass({
           Towel of London -
           Stage { (_stage == 0) ? "TEST" : _stage }
         </h1>
-        <div className="score-board">
+        <div className="score-board cached">
           <h1>Total Move: {JSON.stringify(this.state.moves)}</h1>
           <h1>Total Violation: {this.state.violation}</h1>
           <h1>Total Initial Time: {this.state.initTime}</h1>
