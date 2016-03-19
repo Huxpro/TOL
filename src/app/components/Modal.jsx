@@ -48,7 +48,7 @@ export default class Modal extends React.Component{
    */
   getDataTable(){
     if(this.props.type !== "instructionend") return;
-    
+
     let _moveScore    = 0,
         _correctScore = 0,
         _minMoves     = M,
@@ -221,9 +221,6 @@ export default class Modal extends React.Component{
           </p>
           <Link to="/instruction/end">
             <DelayButton delay={2000}>查看结果</DelayButton>
-          </Link>
-          <Link to="/instruction/1">
-            <DelayButton delay={2000}>重新开始</DelayButton>
           </Link>
         </div>
       ),
