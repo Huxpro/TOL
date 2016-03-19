@@ -10,7 +10,7 @@ import WorkTower from './WorkTower.jsx';
 import Modal from './Modal.jsx';
 
 import isEqual from 'lodash.isequal';
-import {A} from '../stagesModel';
+import {A, M} from '../stagesModel';
 
 
 // But, without immutable data structure...
@@ -44,7 +44,13 @@ let Main = React.createClass({
       modalType: null,
       user: {
         name: ""
-      }
+      },
+      moves: [],
+      violation: 0,
+      initTime: 0,
+      exeTime: 0,
+      recordInit: false,
+      recordExe: false
     }
   },
 
@@ -53,6 +59,13 @@ let Main = React.createClass({
     window.__tol__ = this;
     this.updateStage(this.props.params);
     this.showInstruction(this.props.params);
+
+    // half speed to 16ms (60fps)
+    this.interval = setInterval(this.tick, 32);
+  },
+
+  componentWillUnmount(){
+    clearInterval(this.interval);
   },
 
   componentWillReceiveProps(nextProps) {
@@ -62,6 +75,11 @@ let Main = React.createClass({
 
   componentDidUpdate(prevProps, prevState) {
     if (this.checkGoal()) {
+      // goal arrived, stop record exeTime.
+      __tol__.setState({
+        recordExe: false
+      })
+
       let currentStage = this.props.params.stage;
       console.log(currentStage + " Goal State! ");
 
@@ -102,6 +120,20 @@ let Main = React.createClass({
     return true;
   },
 
+  tick(){
+    if(this.state.recordInit){
+      this.setState({
+        initTime: (Number(this.state.initTime) + 0.032).toFixed(2)
+      });
+    }
+    if(this.state.recordExe){
+      this.setState({
+        exeTime: (Number(this.state.exeTime) + 0.032).toFixed(2)
+      });
+    }
+
+  },
+
   checkGoal(){
     let work = this.state.workTower,
         goal = this.state.dumbTower;
@@ -111,7 +143,7 @@ let Main = React.createClass({
   },
 
   showInstruction(params){
-    console.log(params);
+    //console.log(params);
     let newModalType = null;
     if (params.step) {
       newModalType = "instruction" + params.step
@@ -123,10 +155,26 @@ let Main = React.createClass({
   },
 
   updateStage(params){
-    let stageModel = [];
-    let stage = params.stage;
+    let stage = params.stage
+    if(!stage) return;
 
-    if(params.group == "A") stageModel = A[stage]
+    let stageModel = A[stage]
+
+    console.log("update stage to " + stage);
+
+    // start recording initial time.
+    this.setState({
+      recordInit: true
+    })
+
+    // reset all data when stage1 init.
+    if(stage == 1){
+      this.setState({
+        violation: 0,
+        initTime: 0,
+        exeTime: 0
+      })
+    }
 
     this.setState({
       workTower: [
@@ -136,7 +184,7 @@ let Main = React.createClass({
         []
       ],
       dumbTower: stageModel,
-      modalType: null
+      modalType: null,
     })
   },
 
@@ -152,10 +200,10 @@ let Main = React.createClass({
           Stage { (_stage == 0) ? "TEST" : _stage }
         </h1>
         <div className="score-board">
-          <h1>Total Move: </h1>
-          <h1>Total Correct: </h1>
-          <h1>Total Initial Time:</h1>
-          <h1>Total Excutive Time: </h1>
+          <h1>Total Move: {JSON.stringify(this.state.moves)}</h1>
+          <h1>Total Violation: {this.state.violation}</h1>
+          <h1>Total Initial Time: {this.state.initTime}</h1>
+          <h1>Total Excutive Time: {this.state.exeTime}</h1>
         </div>
 
         <h2>

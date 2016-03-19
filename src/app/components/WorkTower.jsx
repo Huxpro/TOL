@@ -23,7 +23,7 @@ export default class WorkTower extends React.Component{
       this.dropBead(index, staging.slice(-1)[0])
     }else{
       //console.log('Stage bead')
-      this.stageBead(index, respondPeg.slice(-1)[0]);
+      this.pickBead(index, respondPeg.slice(-1)[0]);
     }
   }
 
@@ -44,6 +44,11 @@ export default class WorkTower extends React.Component{
     setTimeout(()=>{
       pegs[i].classList.remove("warning");
     },600)
+
+    // Count Violation
+    __tol__.setState({
+      violation: __tol__.state.violation + 1
+    })
   }
 
 
@@ -53,6 +58,21 @@ export default class WorkTower extends React.Component{
       this.showPegWarning(updateIndex);
       return;
     }
+
+    // Count Actual Moves Only
+    let _moves = __tol__.state.moves.slice(); // copy
+    let _stage = __tol__.props.params.stage
+    let _stageMoves = _moves[_stage];
+
+    // init if undefined
+    if(!_stageMoves) _moves[_stage] = 0;
+
+    // i++
+    _moves[_stage]++
+
+    __tol__.setState({
+      moves: _moves
+    })
 
     // new state
     let newModel = this.props.model.map((peg, index)=>{
@@ -68,7 +88,13 @@ export default class WorkTower extends React.Component{
   }
 
 
-  stageBead(updateIndex, movingBead){
+  pickBead(updateIndex, movingBead){
+    // stop record initialTime
+    __tol__.setState({
+      recordInit: false,
+      recordExe: true
+    })
+
     // check valid
     if(this.props.model[updateIndex].length == 0) {
       this.showPegWarning(updateIndex);
