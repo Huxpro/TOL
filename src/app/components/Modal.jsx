@@ -5,6 +5,7 @@
 
 import { Link } from 'react-router'
 import DelayButton from './DelayButton'
+import {M} from '../stagesModel';
 
 
 export default class Modal extends React.Component{
@@ -20,13 +21,13 @@ export default class Modal extends React.Component{
     e.preventDefault();
 
     let _name       = e.target[0].value;
-    let _sex        = e.target[1].value;
+    let _gender     = e.target[1].value;
     let _cognitive  = e.target[2].value;
     let _group      = e.target[3].value;
 
     let _user = {
       name: _name,
-      sex:  _sex,
+      gender:  _gender,
       cognitive: _cognitive,
       group: _group
     }
@@ -39,6 +40,76 @@ export default class Modal extends React.Component{
 
     // TODO: use API to remove this hardcode
     location.hash = "#/instruction/2"
+  }
+
+  /**
+   * getDataTable
+   * calculate recorded data and generate table.
+   */
+  getDataTable(){
+    let _moveScore    = 0,
+        _correctScore = 0,
+        _minMoves     = M,
+        _actualMoves  = __tol__.state.moves
+
+
+    _minMoves.forEach((min, index) => {
+      // except stage TEST
+      if(index == 0) return;
+      let act = _actualMoves[index];
+
+      console.log(`${index} 最小: ${min}`);
+      console.log(`${index} 实际: ${act}`);
+      if (!act) act = 0;
+      let sco = act - min;
+      console.log(`${index} 分数: ${sco}`);
+
+      // correct score
+      if(min == act) _correctScore++
+
+      // move score
+      _moveScore += sco;
+    })
+
+    return (
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Gender</th>
+            <th>Cognitive</th>
+            <th>Group</th>
+            <th>MoveScore</th>
+            <th>CorrectScore</th>
+            <th>RuleVio</th>
+            <th>TimeVio</th>
+            <th>InitTime</th>
+            <th>ExeTime</th>
+            <th>P2STime</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{__tol__.state.user.name}</td>
+            <td>{__tol__.state.user.gender}</td>
+            <td>{__tol__.state.user.cognitive}</td>
+            <td>{__tol__.state.user.group}</td>
+            <td>{_moveScore}</td>
+            <td>{_correctScore}</td>
+            <td>{__tol__.state.violation}</td>
+            <td>{__tol__.state.timeViolation}</td>
+            <td>{__tol__.state.initTime}</td>
+            <td>{__tol__.state.exeTime}</td>
+            <td>
+              {
+                Number(__tol__.state.initTime)+
+                Number(__tol__.state.exeTime)
+              }
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    )
   }
 
   render(){
@@ -146,14 +217,23 @@ export default class Modal extends React.Component{
           <p>
             请举手示意！
           </p>
-          <Link to="/instruction/1">
-            <DelayButton delay={1000}>查看结果</DelayButton>
+          <Link to="/instruction/end">
+            <DelayButton delay={2000}>查看结果</DelayButton>
           </Link>
           <Link to="/instruction/1">
-            <DelayButton delay={3000}>重新开始</DelayButton>
+            <DelayButton delay={2000}>重新开始</DelayButton>
           </Link>
         </div>
-      )
+      ),
+      "instructionend": (
+        <div className="data-table">
+          <h3>统计结果</h3>
+          {this.getDataTable()}
+          <Link to="/instruction/1">
+            <DelayButton delay={1000}>重新开始</DelayButton>
+          </Link>
+        </div>
+      ),
     }
 
     return (

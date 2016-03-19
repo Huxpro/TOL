@@ -44,6 +44,7 @@ $peg: $bead + 8px;
 }
 
 .score-board{
+  display: none;
   position: absolute;
   top: 0px;
   right: 0px;
@@ -180,6 +181,22 @@ $peg: $bead + 8px;
     left: 0;
     bottom: 0;
     right: 0;
+    &.data-table{
+      width: 90%;
+      table{
+        background: white;
+        color: black;
+        width: 90%;
+        margin: 30px auto;
+        th, td{
+          border: 1px solid rgb(70,85,103);;
+          padding: 10px;
+        }
+      }
+      button{
+        width: 200px;
+      }
+    }
   }
   button{
     background: rgb(120,192,153);

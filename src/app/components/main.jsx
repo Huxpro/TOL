@@ -75,12 +75,18 @@ let Main = React.createClass({
 
   componentDidUpdate(prevProps, prevState) {
     if (this.checkGoal()) {
+      /**
+       * get url params
+       * if url CHANGE to instruction, early return.
+       */
+      let currentStage = this.props.params.stage;
+      if(!currentStage) return;
+
       // goal arrived, stop record exeTime.
       __tol__.setState({
         recordExe: false
       })
 
-      let currentStage = this.props.params.stage;
       console.log(currentStage + " Goal State! ");
 
       if(Number(currentStage) == 0){
@@ -109,6 +115,7 @@ let Main = React.createClass({
 
   shouldComponentUpdate(nextProps, nextState) {
     if(nextState.modalType == "instruction1") return true;
+    if(nextState.modalType == "instructionend") return true;
     if(nextState.modalType && (
        this.state.modalType == "testCompleted" ||
        this.state.modalType == "stageCompleted" ||
