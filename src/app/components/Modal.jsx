@@ -17,10 +17,23 @@ export default class Modal extends React.Component{
   saveUser(e){
     e.preventDefault();
 
-    let _user = e.target[0].value;
+    let _name       = e.target[0].value;
+    let _sex        = e.target[1].value;
+    let _cognitive  = e.target[2].value;
+    let _group      = e.target[3].value;
+
+    let _user = {
+      name: _name,
+      sex:  _sex,
+      cognitive: _cognitive,
+      group: _group
+    }
+
     __tol__.setState({
       user: _user
     })
+
+    __tol__.user = _user;
 
     // TODO: use API to remove this hardcode
     location.hash = "#/instruction/2"
@@ -36,10 +49,22 @@ export default class Modal extends React.Component{
             嘿，欢迎参加伦敦塔测试！
           </p>
           <p>
-            请在下方输入你的学号
+            请在下方输入你的信息
           </p>
           <form onSubmit={this.saveUser}>
-            <input type="number" />
+            <input required type="number" placeholder="学号"/>
+            <select>
+              <option>男</option>
+              <option>女</option>
+            </select>
+            <select>
+              <option>场独立</option>
+              <option>场依存</option>
+            </select>
+            <select>
+              <option>实验组</option>
+              <option>对照组</option>
+            </select>
             <button type="submit"> Done! </button>
           </form>
         </div>

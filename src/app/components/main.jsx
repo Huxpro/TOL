@@ -135,9 +135,15 @@ let Main = React.createClass({
           Group {this.props.params.group} -
           Stage {Number(this.props.params.stage) + 1}
         </h1>
+        <div className="score-board">
+          <h1>Total Move: </h1>
+          <h1>Total Correct: </h1>
+          <h1>Total Initial Time:</h1>
+          <h1>Total Excutive Time: </h1>
+        </div>
 
         <h2>
-          Student - {this.state.user}
+          Student - {this.state.user.name}
         </h2>
 
         <Modal type={this.state.modalType} {...this.props} />

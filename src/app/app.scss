@@ -43,6 +43,13 @@ $peg: $bead + 8px;
   border: 1px dashed $darkgray;
 }
 
+.score-board{
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  min-width: 400px;
+}
+
 .holder{
   position: absolute;
   bottom: 50px;
@@ -188,18 +195,24 @@ $peg: $bead + 8px;
       background: rgba(120,192,153,0.7);
     }
   }
+  form{
+    margin-top: 60px;
+  }
+  select{
+    margin: 15px 10px;
+  }
   input{
     display: block;
-    width: 77%;
+    width: 75%;
     margin: 0 auto;
     border: 0px;
     border-radius: 0px;
     border-bottom: 1px solid #BFBFC0;
-    padding-top: 20px;
     background: transparent;
     overflow: hidden;
     outline: none;
     font-size: 15px;
+    line-height: 1.5;
     font-family: inherit;
   }
 }
