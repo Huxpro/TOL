@@ -133,6 +133,7 @@ export default class Modal extends React.Component{
               <option>女</option>
             </select>
             <select>
+              <option></option>
               <option>场独立</option>
               <option>场依存</option>
             </select>
