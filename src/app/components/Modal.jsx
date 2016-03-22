@@ -45,26 +45,50 @@ export default class Modal extends React.Component{
   /**
    * getDataTable
    * calculate recorded data and generate table.
+   * @type {String} BEFORE or AFTER
    */
-  getDataTable(){
+  getDataTable(type){
     if(this.props.type !== "instructionend") return;
 
     let _moveScore    = 0,
         _correctScore = 0,
-        _minMoves     = M,
-        _actualMoves  = __tol__.state.moves
+        _init = 0,
+        _exe  = 0,
+        _vio  = 0,
+        A             = __tol__.state.moves,
+        _minMoves,
+        _actualMoves;
+      
+    console.log(M);
+    console.log(A);
 
+    if(type == "BEFORE"){
+      _minMoves = M.slice(1,11)
+      _actualMoves = A.slice(1, 11)
+      _init = __tol__.state.halfInitTime
+      _exe  = __tol__.state.halfExeTime
+      _vio  = __tol__.state.halfViolation
+
+    }else{
+      _minMoves = M.slice(11,21)
+      _actualMoves = A.slice(11, 21)
+      _init = Number(__tol__.state.initTime - __tol__.state.halfInitTime).toFixed(2)
+      _exe  = Number(__tol__.state.exeTime - __tol__.state.halfExeTime).toFixed(2)
+      _vio  = __tol__.state.violation - __tol__.state.halfViolation
+    }
+
+    console.log(_minMoves);
+    console.log(_actualMoves);
 
     _minMoves.forEach((min, index) => {
-      // except stage TEST
-      if(index == 0) return;
+      // compare min to act.
       let act = _actualMoves[index];
 
-      console.log(`${index} 最小: ${min}`);
-      console.log(`${index} 实际: ${act}`);
+      //console.log(`${index} 最小: ${min}`);
+      //console.log(`${index} 实际: ${act}`);
       if (!act) act = 0;
       let sco = act - min;
-      console.log(`${index} 分数: ${sco}`);
+      //console.log(`${index} 分数: ${sco}`);
 
       // correct score
       if(min == act) _correctScore++
@@ -73,6 +97,7 @@ export default class Modal extends React.Component{
       _moveScore += sco;
     })
 
+    // render to DOM.
     return (
       <table>
         <thead>
@@ -98,14 +123,15 @@ export default class Modal extends React.Component{
             <td>{__tol__.state.user.group}</td>
             <td>{_moveScore}</td>
             <td>{_correctScore}</td>
-            <td>{__tol__.state.violation}</td>
+            <td>{_vio}</td>
             <td>{__tol__.state.timeViolation}</td>
-            <td>{__tol__.state.initTime}</td>
-            <td>{__tol__.state.exeTime}</td>
+            <td>{_init}</td>
+            <td>{_exe}</td>
             <td>
               {
-                Number(__tol__.state.initTime)+
-                Number(__tol__.state.exeTime)
+                Number(
+                  Number(_init) + Number(_exe)
+                ).toFixed(2)
               }
             </td>
           </tr>
@@ -228,7 +254,8 @@ export default class Modal extends React.Component{
       "instructionend": (
         <div className="data-table">
           <h3>统计结果</h3>
-          {this.getDataTable()}
+          {this.getDataTable("BEFORE")}
+          {this.getDataTable("AFTER")}
           <Link to="/instruction/1">
             <DelayButton delay={1000}>重新开始</DelayButton>
           </Link>

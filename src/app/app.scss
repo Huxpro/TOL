@@ -48,6 +48,8 @@ $peg: $bead + 8px;
   top: 0px;
   right: 0px;
   min-width: 400px;
+  z-index: 1000000;
+  background: white;
 }
 
 .holder{
@@ -179,6 +181,7 @@ $peg: $bead + 8px;
     right: 0;
     &.data-table{
       width: 90%;
+      height: 370px;
       table{
         background: white;
         color: black;
@@ -190,6 +193,7 @@ $peg: $bead + 8px;
         }
       }
       button{
+        margin-top: 0px;
         width: 200px;
       }
     }

@@ -51,7 +51,10 @@ let Main = React.createClass({
       initTime: 0,
       exeTime: 0,
       recordInit: false,
-      recordExe: false
+      recordExe: false,
+      halfInitTime: 0,
+      halfExeTime: 0,
+      halfViolation: 0
     }
   },
 
@@ -189,7 +192,7 @@ let Main = React.createClass({
     })
 
     // reset all data when stage1 init.
-    if( stage ==0 ){
+    if( stage == 0 ){
       this.setState({
         moves: []
       })
@@ -199,6 +202,15 @@ let Main = React.createClass({
         violation: 0,
         initTime: 0,
         exeTime: 0
+      })
+    }
+
+    // record half time.
+    if( stage == 11){
+      this.setState({
+        halfInitTime: this.state.initTime,
+        halfExeTime:  this.state.exeTime,
+        halfViolation: this.state.violation
       })
     }
 
