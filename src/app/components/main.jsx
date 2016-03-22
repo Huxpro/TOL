@@ -189,7 +189,12 @@ let Main = React.createClass({
     })
 
     // reset all data when stage1 init.
-    if(stage == 1){
+    if( stage ==0 ){
+      this.setState({
+        moves: []
+      })
+    }
+    if( stage == 0 || stage == 1){
       this.setState({
         violation: 0,
         initTime: 0,
