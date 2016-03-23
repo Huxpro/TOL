@@ -36,7 +36,6 @@ import {
   // define React components
   let Main = require('./components/main')
 
-
   // Render app with React-Router
   ReactDOM.render((
     <Router history={hashHistory}>
@@ -46,5 +45,5 @@ import {
     </Router>
   ), document.getElementById('app'))
 
-
+  console.log('TOL version 1.1')
 })();
